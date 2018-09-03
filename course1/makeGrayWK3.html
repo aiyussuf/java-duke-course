@@ -1,0 +1,71 @@
+HTML
+
+
+<script src="http://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js"></script>
+
+<h1>Convert an image to grayscale</h1>
+
+<canvas id="c1"></canvas>
+<canvas id="c2"></canvas>
+
+<p>
+<input type="file" accept="image/*" id="fInput" multiple="false" onchange="upload()">
+</p>
+<p>
+<input type="button" id="gray" onclick="makeGray()" value="Make Gray">
+</p>
+
+
+CSS
+
+body {
+  margin: 20px;
+}
+
+h1 {
+  color: gray;
+  font-family: arial;
+  font-size: 20px;
+}
+
+
+JS:
+// Global image variable
+var image;
+var grayImage;
+
+function upload() {
+  // Get file
+  var fInput = document.getElementById("fInput");
+  // Convert to image
+  image = new SimpleImage(fInput);
+  // Save for later
+  grayImage = image;
+  // Get canvas
+  var canvas = document.getElementById("c1");
+  // Draw image on canvas
+  image.drawTo(canvas);
+}
+
+function makeGray() {
+  // Loop through pixels in image
+  for (var pixel of grayImage.values()) {
+    // Get RGB color values
+    var red = pixel.getRed();
+    var green = pixel.getGreen();
+    var blue = pixel.getBlue();
+    // Calculate average
+    var avg = (red + blue + green) / 3;
+    // Set each pixel to value of average
+    pixel.setRed(avg);
+    pixel.setGreen(avg);
+    pixel.setBlue(avg);
+  }
+  // Get canvas
+  var canvas = document.getElementById("c2");
+  // Draw image on canvas
+  grayImage.drawTo(canvas); 
+}
+
+
+
